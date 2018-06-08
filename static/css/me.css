@@ -22,8 +22,8 @@
     padding-bottom: 0.5em !important;
 }
 .m-padded-tb-large {
-    padding-top: 5em !important;
-    padding-bottom: 5em !important;
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
 }
 .m-padded-tb {
     padding-top: 1em !important;
@@ -40,6 +40,7 @@
 
 
 
+/*text*/
 .m-text {
     font-weight: 300 !important;
     letter-spacing: 1px !important;
@@ -56,18 +57,67 @@
     line-height: 1.5 !important;
 }
 
+/*margin*/
+.m-margin-tb-tiny {
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em  !important;
+}
+
+.m-margin-top-large {
+    margin-top: 2em !important;
+}
+.m-margin-top {
+    margin-top: 1em !important;
+}
+.m-margin-top-small {
+    margin-top: 0.5em !important;
+}
+
+
+
+/*opacity*/
 .m-opacity-mini {
     opacity : 0.8 !important;
 }
 
+/*position*/
+.m-right-top{
+    position: absolute;
+    top: 0;
+    right:0;
+}
 
+
+/*display*/
 
 .m-inline-block {
     display: inline-block !important;
 }
 
 
+/*container*/
+
 .m-container {
     max-width: 72em!important;
     margin:auto!important;
+}
+
+/*color*/
+.m-black {
+    color: #333 !important;
+}
+
+
+.m-mobile-show{
+    display: none !important;
+}
+/*media*/
+@media screen and (max-width:768px) {
+    .m-mobile-hide{
+        display: none !important;
+    }
+    .m-mobile-show{
+        display: block !important;
+    }
+
 }

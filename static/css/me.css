@@ -49,6 +49,11 @@ body {
     padding-right: 4em!important;
 }
 
+/*shadow*/
+.m-shadow-small {
+    -webit-box-shadow : 0 4px 8px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
 
 /*text*/
 .m-text {
@@ -144,8 +149,13 @@ body {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
+    .m-mobile-lr-clear {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
     .m-mobile-wide {
         width: 100% !important;
     }
+
 
 }

@@ -1,3 +1,9 @@
+body {
+    background: url("../images/playstation-pattern.png ");
+}
+
+
+
 .m-padded-mini {
     padding: 0.2em !important;
 }
@@ -38,6 +44,10 @@
     padding-bottom: 4em !important;
 }
 
+.m-padded-lr-responsive {
+    padding-left: 4em !important;
+    padding-right: 4em!important;
+}
 
 
 /*text*/
@@ -72,12 +82,19 @@
 .m-margin-top-small {
     margin-top: 0.5em !important;
 }
+.m-margin-bottom-small {
+    margin-bottom: 0.5em  !important;
+
+}
 
 
 
 /*opacity*/
 .m-opacity-mini {
     opacity : 0.8 !important;
+}
+.m-opacity-tiny {
+    opacity : 0.6 !important;
 }
 
 /*position*/
@@ -101,6 +118,10 @@
     max-width: 72em!important;
     margin:auto!important;
 }
+.m-container-small {
+    max-width: 60em!important;
+    margin:auto!important;
+}
 
 /*color*/
 .m-black {
@@ -118,6 +139,13 @@
     }
     .m-mobile-show{
         display: block !important;
+    }
+    .m-padded-lr-responsive {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .m-mobile-wide {
+        width: 100% !important;
     }
 
 }

@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace = "admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>Type Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
 
-    <nav th:replace="admin/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog Manager</h2>
-                <a href="#" class="active m-item item m-mobile-hide"><i class="small home icon"></i>Blog</a>
+                <a href="#" class=" m-item item m-mobile-hide"><i class="small home icon"></i>Blog</a>
                 <a href="#" class=" m-item item m-mobile-hide"><i class="small idea icon"></i>Category</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="small tags icon"></i>Tag</a>
                 <div class="right menu m-item m-mobile-hide">
@@ -23,7 +23,7 @@
                         </div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                            <a href="#" class="item">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -34,13 +34,50 @@
         </a>
     </nav>
 
+    <div class="ui attached pointing menu">
+        <div class="ui container">
+            <div class="right menu">
+                <a href="#" class="item">Post</a>
+                <a href="#" class="teal active item">List</a>
+            </div>
+        </div>
+    </div>
+
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-           <div class="ui success large message">
-               <h2>Hi,</h2>
-               <p>Vicky, welcome to your blog!</p>
-           </div>
-            <img src="https://unsplash.it/1000/400?image=1005" alt="" class="ui rounded bordered fluid image">
+
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Operate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="type, iterStat : ${page.content}">
+                        <td th:text="${iterStat.count}">1</td>
+                        <td th:text="${type.name}">Ice Cream Sandwich</td>
+                        <td>
+                            <a href="#" th:href="@{/admin/types/{id}/input(id=${type.id})}" class="ui mini teal basic button">Edit</a>
+                            <a href="#" th:href="@{/admin/types/{id}/delete(id=${type.id})}" class="ui mini red  basic button">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">
+                            <div th:if="${page.totalPages}>1" class="ui mini pagination menu">
+                                <a th:href="@{/admin/types(page=${page.number}-1)}" class="item" th:unless="${page.first}">Previous</a>
+                                <a th:href="@{/admin/types(page=${page.number}+1)}" class="item" th:unless="${page.last}">Next</a>
+                            </div>
+                            <a href="#" th:href="@{/admin/types/input}"  class="ui mini right floated teal basic button">Add</a>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+
+
         </div>
     </div>
 

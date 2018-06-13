@@ -2,16 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace = "admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title >Add type</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
 
-    <nav th:replace="admin/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">Blog Manager</h2>
+                <h2 class="ui teal header item">Blog Post</h2>
                 <a href="#" class="active m-item item m-mobile-hide"><i class="small home icon"></i>Blog</a>
                 <a href="#" class=" m-item item m-mobile-hide"><i class="small idea icon"></i>Category</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="small tags icon"></i>Tag</a>
@@ -23,7 +24,7 @@
                         </div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                            <a href="#" class="item">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -34,17 +35,49 @@
         </a>
     </nav>
 
+    <div class="ui attached pointing menu">
+        <div class="ui container">
+            <div class="right menu">
+                <a href="#" class="teal active item">Post</a>
+                <a href="#" class="item">List</a>
+            </div>
+        </div>
+    </div>
+
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-           <div class="ui success large message">
-               <h2>Hi,</h2>
-               <p>Vicky, welcome to your blog!</p>
-           </div>
-            <img src="https://unsplash.it/1000/400?image=1005" alt="" class="ui rounded bordered fluid image">
+            <form action="#" method="post" th:action="@{/admin/types}" class="ui form">
+                <div class="field">
+                    <div class="ui left labeled input">
+                        <label  class="ui teal basic label">Name</label>
+                        <input type="text" name="name" placeholder="Type name">
+                    </div>
+                </div>
+
+
+                <div class="ui error message"></div>
+
+                <div class="ui right aligned container">
+                    <button type="button" class="ui button" onclick="window.history.go(-1)">Back</button>
+                    <button class="ui teal submit button">Submit</button>
+                </div>
+
+            </form>
+
+
         </div>
     </div>
 
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -91,13 +124,27 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
     <!--/*/</th:block>/*/-->
+
     <script>
+
+
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
 
     $('.ui.dropdown').dropdown({
         on:'hover'
+    });
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'title',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Title:  Enter blog title '
+                }]
+            }
+        }
     });
 </script>
 </body>

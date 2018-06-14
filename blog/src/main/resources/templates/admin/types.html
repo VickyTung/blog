@@ -37,14 +37,19 @@
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="right menu">
-                <a href="#" class="item">Post</a>
-                <a href="#" class="teal active item">List</a>
+                <a href="#" th:href="@{/admin/types/input}" class="item">add</a>
+                <a href="#" th:href="@{/admin/types}" class="teal active item">List</a>
             </div>
         </div>
     </div>
 
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">Tips</div>
+                <P th:text="${message}">Congrats, operation success!</P>
+            </div>
 
             <table class="ui celled table">
                 <thead>
@@ -136,6 +141,9 @@
     $('.ui.dropdown').dropdown({
         on:'hover'
     });
+    $('.message .close').on('click', function () {
+        $(this).closest('.message').transition('fade');
+    })
 </script>
 </body>
 </html>

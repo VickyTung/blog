@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace = "admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Manager</title>
+    <title>Type Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
 
-    <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <h2 class="ui teal header item">Blog Management</h2>
-                <a href="#" class="active m-item item m-mobile-hide"><i class="small home icon"></i>Blog</a>
+                <h2 class="ui teal header item">Blog Manager</h2>
+                <a href="#" class=" m-item item m-mobile-hide"><i class="small home icon"></i>Blog</a>
                 <a href="#" class=" m-item item m-mobile-hide"><i class="small idea icon"></i>Category</a>
                 <a href="#" class="m-item item m-mobile-hide"><i class="small tags icon"></i>Tag</a>
                 <div class="right menu m-item m-mobile-hide">
@@ -23,7 +23,7 @@
                         </div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                            <a href="#" class="item">Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -37,80 +37,52 @@
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="right menu">
-                <a href="#" class="item">post</a>
-                <a href="#" class="teal active item">List</a>
+                <a href="#" th:href="@{/admin/tags/input}" class="item">add</a>
+                <a href="#" th:href="@{/admin/tags}" class="teal active item">List</a>
             </div>
         </div>
     </div>
 
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-            <div class="ui secondary segment form">
-                <input type="hidden" name="page">
-                <div class="inline fields">
-                    <div class="field">
-                        <input type="text" name="title" placeholder="Title">
-                    </div>
-                    <div class="field">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="typeId">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Category</div>
-                            <div class="menu">
-                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" id="recommended" name="recommended">
-                            <label for="recommended">Recommend</label>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>Search</button>
-                    </div>
-                </div>
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <i class="close icon"></i>
+                <div class="header">Tips</div>
+                <P th:text="${message}">Congrats, operation success!</P>
             </div>
 
-            <div id="table-container">
-                <table th:fragment="blogList" class="ui compact teal table">
-                    <thead>
+            <table class="ui celled table">
+                <thead>
                     <tr>
                         <th></th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Recommend</th>
-                        <th>Edited Time</th>
+                        <th>Name</th>
                         <th>Operate</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each = "blog,iterStat : ${page.content}">
+                </thead>
+                <tbody>
+                    <tr th:each="tag, iterStat : ${page.content}">
                         <td th:text="${iterStat.count}">1</td>
-                        <td th:text="${blog.title}">Ice Cream Sandwich</td>
-                        <td th:text="${blog.type.name}">recipe</td>
-                        <td th:text="${blog.recommended} ? 'yes' : 'no'">yes</td>
-                        <td th:text="${blog.updateTime}">2017-10-02 09:45</td>
+                        <td th:text="${tag.name}">Ice Cream Sandwich</td>
                         <td>
-                            <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
-                            <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red  basic button">Delete</a>
+                            <a href="#" th:href="@{/admin/tags/{id}/input(id=${tag.id})}" class="ui mini teal basic button">Edit</a>
+                            <a href="#" th:href="@{/admin/tags/{id}/delete(id=${tag.id})}" class="ui mini red  basic button">Delete</a>
                         </td>
                     </tr>
-                    </tbody>
-                    <tfoot>
+                </tbody>
+                <tfoot>
                     <tr>
                         <th colspan="6">
-                            <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
-                                <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
-                                <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
+                            <div th:if="${page.totalPages}>1" class="ui mini pagination menu">
+                                <a th:href="@{/admin/tags(page=${page.number}-1)}" class="item" th:unless="${page.first}">Previous</a>
+                                <a th:href="@{/admin/tags(page=${page.number}+1)}" class="item" th:unless="${page.last}">Next</a>
                             </div>
-                            <a href="#" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">Add</a>
+                            <a href="#" th:href="@{/admin/tags/input}"  class="ui mini right floated teal basic button">Add</a>
                         </th>
                     </tr>
-                    </tfoot>
-                </table>
-            </div>
+                </tfoot>
+            </table>
+
+
         </div>
     </div>
 
@@ -157,7 +129,7 @@
 
     </footer>
 
-    <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+    <!--/*/<th:block th:replace="_fragments :: script">/*/-->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
     <!--/*/</th:block>/*/-->
@@ -169,24 +141,9 @@
     $('.ui.dropdown').dropdown({
         on:'hover'
     });
-
-    function page(obj) {
-        $("[name='page']").val($(obj).data("page"));
-        loaddata();
-    }
-    
-    $('#search-btn').click(function () {
-        loaddata();
-    });
-
-    function loaddata() {
-        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
-            title: $("[name='title']").val(),
-            typeId : $("[name= 'typeId']").val(),
-            recommended : $("[name= 'recommended']").prop('checked'),
-            page : $("[name= 'page']").val(),
-        });
-    }
+    $('.message .close').on('click', function () {
+        $(this).closest('.message').transition('fade');
+    })
 </script>
 </body>
 </html>

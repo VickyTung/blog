@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
                 <h2 class="ui teal header item">Blog Post</h2>
@@ -38,20 +38,20 @@
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="right menu">
-                <a href="#" th:href="@{/admin/types/input}" class="item active">add</a>
-                <a href="#" th:href="@{/admin/types}" class="teal  item">List</a>
+                <a href="#" th:href="@{/admin/tags/input}" class="item active">add</a>
+                <a href="#" th:href="@{/admin/tags}" class="teal  item">List</a>
             </div>
         </div>
     </div>
 
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-            <form action="#" method="post" th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})}" class="ui form">
+            <form action="#" method="post" th:object="${tag}" th:action="*{id}==null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}" class="ui form">
                 <input type="hidden" name="id" th:value="*{id}">
                 <div class="required field">
                     <div class="ui left labeled input">
                         <label  class="ui teal basic label">Name</label>
-                        <input type="text" name="name" placeholder="Type name" th:value="*{name}">
+                        <input type="text" name="name" placeholder="Tag name" th:value="*{name}">
                     </div>
                 </div>
                 <div class="ui error message"></div>
@@ -128,7 +128,7 @@
 
     </footer>
 
-    <!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+    <!--/*/<th:block th:replace="_fragments :: script">/*/-->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.js"></script>
     <!--/*/</th:block>/*/-->

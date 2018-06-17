@@ -1,6 +1,7 @@
 package com.haojing.blog.web.adim;
 
 import com.haojing.blog.po.Blog;
+import com.haojing.blog.po.User;
 import com.haojing.blog.service.BlogService;
 import com.haojing.blog.service.TagService;
 import com.haojing.blog.service.TypeService;
@@ -14,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
@@ -55,5 +59,19 @@ public class BlogController {
         return INPUT;
     }
 
+    @PostMapping("/blogs")
+    public String post(Blog blog, RedirectAttributes attributes, HttpSession session) {
+        blog.setUser((User) session.getAttribute("user"));
+        blog.setType(typeService.getType(blog.getType().getId()));
+        blog.setTags(tagService.listTag(blog.getTagIds()));
 
+        Blog b = blogService.saveBlog(blog);
+        if (b == null) {
+            attributes.addFlashAttribute("message", "Fail to add blog");
+        } else {
+            attributes.addFlashAttribute("message", "Successful added blog");
+        }
+
+        return REDIRECT_LIST;
+    }
 }

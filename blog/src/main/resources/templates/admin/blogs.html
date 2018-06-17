@@ -52,13 +52,16 @@
                         <input type="text" name="title" placeholder="Title">
                     </div>
                     <div class="field">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="typeId">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Category</div>
-                            <div class="menu">
-                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
+                        <div class="ui labeled action input">
+                            <div class="ui type selection dropdown">
+                                <input type="hidden" name="typeId">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Category</div>
+                                <div class="menu">
+                                    <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}"></div>
+                                </div>
                             </div>
+                            <button class="ui clear compact button">clear</button>
                         </div>
                     </div>
                     <div class="field">
@@ -81,16 +84,18 @@
                         <th>Title</th>
                         <th>Category</th>
                         <th>Recommend</th>
+                        <th>Published</th>
                         <th>Edited Time</th>
                         <th>Operate</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each = "blog,iterStat : ${page.content}">
-                        <td th:text="${iterStat.count}">1</td>
+                        <td th:text="${page.number*page.size + iterStat.count}">1</td>
                         <td th:text="${blog.title}">Ice Cream Sandwich</td>
                         <td th:text="${blog.type.name}">recipe</td>
                         <td th:text="${blog.recommended} ? 'yes' : 'no'">yes</td>
+                        <td th:text="${blog.published} ? 'yes' : 'no'">yes</td>
                         <td th:text="${blog.updateTime}">2017-10-02 09:45</td>
                         <td>
                             <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">Edit</a>
@@ -100,7 +105,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th colspan="6">
+                        <th colspan="7">
                             <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
                                 <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
                                 <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">Next</a>
@@ -110,6 +115,12 @@
                     </tr>
                     </tfoot>
                 </table>
+
+                <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="header">Reminder: </div>
+                    <p th:text="${message}">Congratulation, operation succeeded!</p>
+                </div>
             </div>
         </div>
     </div>
@@ -170,12 +181,20 @@
         on:'hover'
     });
 
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
     function page(obj) {
         $("[name='page']").val($(obj).data("page"));
         loaddata();
     }
     
     $('#search-btn').click(function () {
+        $("[name='page']").val(0);
         loaddata();
     });
 
@@ -187,6 +206,14 @@
             page : $("[name= 'page']").val(),
         });
     }
+
+    $('.ui.clear.compact.button')
+        .on('click', function() {
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        })
+    ;
 </script>
 </body>
 </html>

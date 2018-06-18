@@ -29,7 +29,7 @@ public class BlogServiceImpl implements BlogService {
     private BlogRepository blogRepository;
 
     @Override
-    public Blog get(Long id) {
+    public Blog getBlog(Long id) {
         Optional<Blog> typeOptional = blogRepository.findById(id);
         if (typeOptional.isPresent()) {
             return typeOptional.get();
@@ -61,16 +61,21 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     @Override
     public Blog saveBlog(Blog blog) {
-        blog.setCreateTime(new Date());
-        blog.setUpdateTime(new Date());
-        blog.setViews(0);
+        if (blog.getId() == null ){
+            blog.setCreateTime(new Date());
+            blog.setUpdateTime(new Date());
+            blog.setViews(0);
+        } else {
+            blog.setUpdateTime(new Date());
+        }
+
         return blogRepository.save(blog);
     }
 
     @Transactional
     @Override
     public Blog updateBlog(Long id, Blog blog) {
-        Blog b = get(id);
+        Blog b = getBlog(id);
         if (b == null) {
             throw new NotFoundException("The blog does not exist");
         }

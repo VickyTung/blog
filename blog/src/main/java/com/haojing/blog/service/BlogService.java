@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BlogService {
 
-    Blog get(Long id);
+    Blog getBlog(Long id);
 
     Page<Blog> listBlog(Pageable pageable, BlogQuery blog);
 

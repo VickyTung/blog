@@ -104,7 +104,10 @@
                         <label  class="ui teal basic label">Image</label>
                         <input type="text" name="firstPicture" th:value="*{firstPicture}" placeholder="photo Url">
                     </div>
+                </div>
 
+                <div class="required field">
+                    <textarea name="description" placeholder="Blog description" th:text="*{description}" maxlength="200"></textarea>
                 </div>
 
                 <div class="inline fields">
@@ -256,6 +259,13 @@
                 rules: [{
                     type: 'empty',
                     prompt: 'Title:  Enter blog picture '
+                }]
+            },
+            description: {
+                identifier: 'description',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Title:  Enter blog description '
                 }]
             },
 

@@ -44,6 +44,8 @@ public class Blog {
     @Transient
     private String tagIds;
 
+    private String description;
+
     public Blog() {
 
     }
@@ -184,6 +186,14 @@ public class Blog {
         this.comments = comments;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getTagIds() {
         return tagIds;
     }
@@ -231,6 +241,12 @@ public class Blog {
                 ", recommended=" + recommended +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comments=" + comments +
+                ", tagIds='" + tagIds + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

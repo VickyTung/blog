@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
     <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
     <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
-    <link rel="stylesheet" href="../static/css/me.css" th:href="@{css/me.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
 </head>
 <body>
 
@@ -22,10 +22,12 @@
             <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="small clone icon"></i>Archives</a>
             <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="small info icon"></i>About me</a>
             <div class="right  m-item item m-mobile-hide">
-                <div class="ui icon transparent inverted input">
-                    <input type="text" placeholder="Search....">
-                    <i class="search link icon"></i>
-                </div>
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon transparent inverted input">
+                        <input type="text" name="query" placeholder="Search...." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -40,7 +42,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="../static/images/wechat.jpg" th:src="@{images/wechat.jpg}" class="ui rounded image" alt="" style="width:110px">
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" alt="" style="width:110px">
                     </div>
                 </div>
             </div>

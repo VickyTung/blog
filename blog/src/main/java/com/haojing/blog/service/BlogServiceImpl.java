@@ -4,6 +4,7 @@ import com.haojing.blog.NotFoundException;
 import com.haojing.blog.dao.BlogRepository;
 import com.haojing.blog.po.Blog;
 import com.haojing.blog.po.Type;
+import com.haojing.blog.util.MarkDownUtils;
 import com.haojing.blog.util.MyBeanUtils;
 import com.haojing.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
@@ -34,10 +35,20 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getBlog(Long id) {
         Optional<Blog> typeOptional = blogRepository.findById(id);
-        if (typeOptional.isPresent()) {
-            return typeOptional.get();
+        if (!typeOptional.isPresent()) {
+            throw new NotFoundException("blog does not exist");
         }
-        return null;
+        return typeOptional.get();
+    }
+
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = getBlog(id);
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog,b);
+        String content = b.getContent();
+        b.setContent(MarkDownUtils.markdownToHtmlExtensions(content));
+        return b;
     }
 
     @Override

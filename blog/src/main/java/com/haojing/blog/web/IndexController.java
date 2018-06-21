@@ -1,6 +1,7 @@
 package com.haojing.blog.web;
 
 import com.haojing.blog.NotFoundException;
+import com.haojing.blog.po.Blog;
 import com.haojing.blog.service.BlogService;
 import com.haojing.blog.service.TagService;
 import com.haojing.blog.service.TypeService;
@@ -8,6 +9,7 @@ import com.haojing.blog.vo.BlogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class IndexController {
@@ -46,5 +50,11 @@ public class IndexController {
     public String blog(@PathVariable Long id, Model model){
         model.addAttribute("blog",blogService.getAndConvert(id));
         return "blog";
+    }
+    @GetMapping("/footer/newBlog")
+    public String newBlogs(Model model) {
+        List<Blog> blogs = blogService.listRecommendBlogTop(3);
+        model.addAttribute("newBlogs", blogService.listRecommendBlogTop(3));
+        return "_fragments :: newBlogList";
     }
 }
